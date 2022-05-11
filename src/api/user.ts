@@ -5,4 +5,4 @@ async function getUser(params: any) {
     .get(`https://randomuser.me/api/`, {params});
     }
 
-export default getUser;
+export { getUser };
