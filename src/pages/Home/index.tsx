@@ -50,7 +50,7 @@ const Home = () => {
                     <div className="row py-lg-5">
                     <div className="col-lg-6 col-md-8 mx-auto">
                         <h1 className="fw-light">Jagoan FC</h1>
-                        <p className="lead text-muted">Welcome to Member Management agoan FC</p>
+                        <p className="lead text-muted">Welcome to Member Management Jagoan FC</p>
                         
                     </div>
                     </div>
