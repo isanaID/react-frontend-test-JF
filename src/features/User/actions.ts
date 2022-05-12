@@ -10,8 +10,8 @@ import {
 export const getUser = () => {
     return (dispatch: any) => {
         dispatch(startFetchingUser());
-        return axios.get(`https://randomuser.me/api/?results=10`).then( res => {
-            dispatch(updateUser(res.data))
+        return axios.get(`https://randomuser.me/api/?results=200`).then( res => {
+            dispatch(updateUser(res.data.results));
             dispatch(fetchingUserSuccess({
                 message: "Success",
                 type: FETCHING_USER_SUCCESS  
