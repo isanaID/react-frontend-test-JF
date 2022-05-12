@@ -1,35 +1,27 @@
-import debounce from 'debounce-promise';
+import axios from "axios";
 
 import {
     START_FECTCHING_USER,
+    UPDATE_USER,
     FETCHING_USER_SUCCESS,
-    ERROR_FETCHING_USER,
-    SET_PAGE,
-    NEXT_PAGE,
-    PREV_PAGE
+    ERROR_FETCHING_USER
 } from "./constants";
 
-import { getUser } from "../../api/user";
-
-let debouncedGetUser = debounce(getUser, 500);
-
-export const fetchUser = () => {
-    return async (dispatch: any, getState: any) => {
+export const getUser = () => {
+    return (dispatch: any) => {
         dispatch(startFetchingUser());
-
-        let perPage: number = getState().User.perPage || 10;
-        let currentPage: number = getState().User.currentPage || 1;
-        let params: any = {
-            limit: perPage,
-            skip: (currentPage * perPage) - perPage
-        };
-
-        try {
-            let { data: { data, count }} : any = await debouncedGetUser(params);
-            dispatch(fetchingUserSuccess({data, count}));
-        } catch (error) {
-            dispatch(errorFetchingUser());
-        }
+        return axios.get(`https://randomuser.me/api/?results=10`).then( res => {
+            dispatch(updateUser(res.data))
+            dispatch(fetchingUserSuccess({
+                message: "Success",
+                type: FETCHING_USER_SUCCESS  
+            }));
+        }).catch( err => {
+            dispatch(fetchingUserError({
+                message: "Error",
+                type: ERROR_FETCHING_USER
+            }));
+    });
     }
 }
 
@@ -39,34 +31,23 @@ export const startFetchingUser = () => {
     }
 }
 
-export const fetchingUserSuccess = (user: any) => {
+export const fetchingUserSuccess = (payload: any) => {
     return {
         type: FETCHING_USER_SUCCESS,
-        ...user
+        payload
     }
 }
 
-export const errorFetchingUser = () => {
+export const fetchingUserError = (payload: any) => {
     return {
-        type: ERROR_FETCHING_USER
+        type: ERROR_FETCHING_USER,
+        payload
     }
 }
 
-export const setPage = (number:number = 1) => {
+export const updateUser = (payload: any) => {
     return {
-        type: SET_PAGE,
-        currentPage: number
-    }
-}
-
-export const nextPage = () => {
-    return {
-        type: NEXT_PAGE
-    }
-}
-
-export const prevPage = () => {
-    return {
-        type: PREV_PAGE
+        type: UPDATE_USER,
+        payload
     }
 }
