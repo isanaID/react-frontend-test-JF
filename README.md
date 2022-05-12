@@ -17,8 +17,8 @@ anggota ini memiliki atribut berupa nama, email, jenis kelamin, umur, dan tangga
 
 ### Cara menjalankan aplikasi
 ```sh
-git clone
-cd 
+git clone https://github.com/isanaID/react-frontend-test-JF.git
+cd react-frontend-test-JF
 npm install
 npm start
 open http://localhost:3000
